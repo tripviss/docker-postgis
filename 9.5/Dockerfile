@@ -56,25 +56,6 @@ RUN set -xe \
 	&& make install \
 	&& cd /root \
 	&& rm -rf /usr/local/src/postgis \
-	# strip binaries
-	&& { \
-		find /usr/local/lib -type f 2>/dev/null | while read bin_filename; do \
-			case "$(file -biz "$bin_filename")" in \
-				*compressed-encoding*) \
-				# Skip compressed binaries
-					;; \
-				*application/x-sharedlib*) \
-				# Libraries (.so)
-					strip --strip-unneeded "$bin_filename";; \
-				*application/x-archive*) \
-				# Libraries (.a)
-					strip --strip-debug "$bin_filename";; \
-				*application/x-executable*) \
-				# Executables
-					strip --strip-all "$bin_filename";; \
-			esac \
-		done \
-	} \
 	&& ldconfig \
 	&& apt-get purge -y --auto-remove $buildDeps
 

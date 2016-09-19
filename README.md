@@ -2,6 +2,5 @@
 * PostgreSQL 9.5
 * PostGIS 2.2
 * GEOS 3.5 ([recommended](https://trac.osgeo.org/postgis/wiki/UsersWikiPostgreSQLPostGIS))
-* Stripped binaries (debug symbols etc.) for smaller image / suitable for production use
 
 Adapted from [mdillon/postgis](https://hub.docker.com/r/mdillon/postgis/) and [oslandia/pggis](https://hub.docker.com/r/oslandia/pggis/)
