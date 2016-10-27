@@ -1,4 +1,4 @@
-FROM postgres:9.5
+FROM postgres:9.6
 MAINTAINER Teoh Han Hui <teohhanhui@gmail.com>
 
 # persistent / runtime deps
@@ -10,8 +10,8 @@ RUN apt-get update \
 		libxml2 \
 	&& rm -rf /var/lib/apt/lists/*
 
-ENV POSTGIS_VERSION 2.2.3
-ENV GEOS_VERSION 3.5.1
+ENV POSTGIS_VERSION 2.3.0
+ENV GEOS_VERSION 3.6.0
 
 ENV POSTGIS_FILENAME postgis-${POSTGIS_VERSION}.tar.gz
 ENV GEOS_FILENAME geos-${GEOS_VERSION}.tar.bz2
