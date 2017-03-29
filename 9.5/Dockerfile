@@ -10,7 +10,7 @@ RUN apt-get update \
 		libxml2 \
 	&& rm -rf /var/lib/apt/lists/*
 
-ENV POSTGIS_VERSION 2.2.3
+ENV POSTGIS_VERSION 2.2.5
 ENV GEOS_VERSION 3.5.1
 
 ENV POSTGIS_FILENAME postgis-${POSTGIS_VERSION}.tar.gz

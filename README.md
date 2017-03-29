@@ -5,7 +5,7 @@ Based on [official postgres image](https://hub.docker.com/_/postgres/)
 ## PostgreSQL 9.6
 
 * PostGIS 2.3
-* GEOS 3.6
+* GEOS 3.6 ([recommended](https://trac.osgeo.org/postgis/wiki/UsersWikiPostgreSQLPostGIS))
 
 ## PostgreSQL 9.5
 
