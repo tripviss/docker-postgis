@@ -1,5 +1,4 @@
 FROM postgres:9.6
-MAINTAINER Teoh Han Hui <teohhanhui@gmail.com>
 
 # persistent / runtime deps
 RUN apt-get update \
@@ -20,6 +19,7 @@ RUN set -xe \
 	&& buildDeps=" \
 		binutils \
 		curl \
+		dpkg-dev \
 		g++ \
 		gcc \
 		libgdal-dev \
@@ -29,18 +29,17 @@ RUN set -xe \
 		make \
 		postgresql-server-dev-$PG_MAJOR \
 	" \
-	&& apt-get update \
-	&& apt-get install -y --no-install-recommends \
-		$buildDeps \
-	&& rm -rf /var/lib/apt/lists/* \
+	&& apt-get update && apt-get install -y $buildDeps --no-install-recommends && rm -rf /var/lib/apt/lists/* \
 	# build geos
 	&& curl -fSL "http://download.osgeo.org/geos/$GEOS_FILENAME" -o "$GEOS_FILENAME" \
 	&& mkdir -p /usr/local/src/geos \
 	&& tar -xf "$GEOS_FILENAME" -C /usr/local/src/geos --strip-components=1 \
 	&& rm "$GEOS_FILENAME" \
 	&& cd /usr/local/src/geos \
+	&& gnuArch="$(dpkg-architecture --query DEB_BUILD_GNU_TYPE)" \
 	&& ./configure \
-	&& make \
+		--build="$gnuArch" \
+	&& make -j "$(nproc)" \
 	&& make install \
 	&& cd /root \
 	&& rm -rf /usr/local/src/geos \
@@ -50,9 +49,11 @@ RUN set -xe \
 	&& tar -xf "$POSTGIS_FILENAME" -C /usr/local/src/postgis --strip-components=1 \
 	&& rm "$POSTGIS_FILENAME" \
 	&& cd /usr/local/src/postgis \
+	&& gnuArch="$(dpkg-architecture --query DEB_BUILD_GNU_TYPE)" \
 	&& ./configure \
+		--build="$gnuArch" \
 		--with-geos=/usr/local/bin/geos-config \
-	&& make \
+	&& make -j "$(nproc)" \
 	&& make install \
 	&& cd /root \
 	&& rm -rf /usr/local/src/postgis \
